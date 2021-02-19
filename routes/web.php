@@ -1,10 +1,17 @@
 <?php
 
+use App\Http\Controllers\home3Controller;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\AboutUsController;
+use App\Http\Controllers\ContactController;
+use Illuminate\Support\Facades\Route;
+
 // use App\Http\Controllers\PageController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ArticleController;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,7 +48,24 @@ use Illuminate\Support\Facades\Route;
 
 /*** PRAKTIKUM 2 SESI 2***/
 
-Route::get('/', [HomeController::class, 'index']);
-Route::get('/about', [AboutController::class, 'about']);
-Route::get('/articles/{id}', [ArticleController::class, 'articles']);
+// Route::get('/', [HomeController::class, 'index']);
+// Route::get('/about', [AboutController::class, 'about']);
+// Route::get('/articles/{id}', [ArticleController::class, 'articles']);
 
+/*** PRAKTIKUM 3 ***/
+
+Route::get('/home', [home3Controller::class, 'index']);
+
+Route::prefix('category')->group(function () {
+    Route::get('/{id}', [ProductController::class,'product']);
+});
+
+Route::get('/news/{id?}', [NewsController::class,'news']);
+
+Route::prefix('program')->group(function () {
+    Route::get('/{id}', [ProgramController::class,'program']);
+});
+
+Route::get('/AboutUs', [AboutUsController::class,'about']);
+
+Route::resource('contact', ContactController::class);
